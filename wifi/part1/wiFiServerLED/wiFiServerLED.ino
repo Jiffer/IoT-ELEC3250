@@ -16,7 +16,7 @@ const char *password = "connected";
 // doesn't need to specify the port
 ESP8266WebServer server(800);
 
-const int ledPin = 16; // output LED toggle with HTML
+const int ledPin = 2; // output LED toggle with HTML
 
 // keep track of current value
 bool ledState = false;
