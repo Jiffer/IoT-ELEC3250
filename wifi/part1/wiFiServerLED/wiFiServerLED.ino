@@ -99,6 +99,7 @@ void handleLed() {
 
 
   // TODO: read analog value and assign to background color
+  int analogVal = analogRead(A0);
   int red = 100;
   int green = 100;
   int blue = 100;
@@ -168,6 +169,7 @@ void handleRoot() {
   int hr = min / 60;
 
   // TODO: read analog value and assign to background color
+  int analogVal = analogRead(A0);
   int red = 80;
   int green = 100;
   int blue = 100;
