@@ -47,7 +47,7 @@ void setup() {
 
   server.on ( "/", handleRoot );
   server.on ( "/led/", handleLed );
-  
+
   server.on ( "/inline", []() {
     server.send ( 200, "text/plain", "this works as well.");
   } );
@@ -71,15 +71,11 @@ void loop() {
 void handleLed() {
   // capture any value passed into the led argument and assign to ledState
   ledState = server.arg("led").toInt();
-  int analogRequest = server.arg("analog").toInt();
-  if (analogRequest > 0) {
-    Serial.println(analogRequest);
-    analogWrite(ledPin, analogRequest);
-  }
-  else {
-    digitalWrite (ledPin, ledState);
-    //Serial.println(ledState);
-  }
+  // TODO: handle another query to set analogWrite value
+  
+  digitalWrite (ledPin, ledState);
+  //Serial.println(ledState);
+
 
   /* Dynamically generate the LED toggle link, based on its current state (on or off)*/
   char ledText[80];
