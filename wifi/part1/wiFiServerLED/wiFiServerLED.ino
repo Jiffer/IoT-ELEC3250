@@ -8,8 +8,8 @@
 #include <ESP8266WebServer.h>
 
 /* WiFi access point settings. Update them as needed */
-const char *ssid = "NETWORK";
-const char *password = "PASSWORD";
+const char *ssid = "things";
+const char *password = "connected";
 
 // Define a web server at port 800 for HTTP
 // NOTE: if 80 is used your web browser
@@ -66,65 +66,20 @@ void loop() {
 }
 
 // ***************************
-// when root page is accessed
-// ***************************
-void handleRoot() {
-  /* Dynamically generate the LED toggle link, based on its current state (on or off)*/
-  char ledText[80];
-
-  if (ledState) {
-    strcpy(ledText, "LED is off. <a href=\"/led/?led=0\">Turn it On!</a>");
-  }
-
-  else {
-    strcpy(ledText, "LED is on. <a href=\"/led/?led=1\">Turn it Off!</a>");
-  }
-
-  int sec = millis() / 1000;
-  int min = sec / 60;
-  int hr = min / 60;
-
-  int red = 100;
-  int green = 100;
-  int blue = 100;
-  // calculate background color
-  // (0xffffff); // r << 16 + g << 8 + b
-  unsigned long bgVal = red * 65536 + green * 256 + blue ;
-
-  // Build an HTML page to display on the web-servesr root address
-  char html[1000];
-  snprintf ( html, 1000,
-             "<html>\
-  <head>\
-    <meta http-equiv='refresh' content='10'/>\
-    <title>ESP8266 WiFi Network</title>\
-    <style>\
-      body { background-color: %0x%; font-family: Arial, Helvetica, Sans-Serif; font-size: 1.5em; Color: #000000; }\
-      h1 { Color: #FFF000; }\
-    </style>\
-  </head>\
-  <body>\
-    <h1>ESP8266 Wi-Fi Web Server Demo</h1>\
-    <p>Uptime: %02d:%02d:%02d</p>\
-    <p>%s<p>\
-    <p>This page refreshes every 10 seconds. Click <a href=\"javascript:window.location.reload();\">here</a> to refresh the page now.</p>\
-  </body>\
-</html>",
-             bgVal, // https://stackoverflow.com/questions/14733761/printf-formatting-for-hex
-             hr, min % 60, sec % 60,
-             ledText
-           );
-  server.send ( 200, "text/html", html );
-  //  digitalWrite ( ledPin, 1 );
-}
-
-// ***************************
-// When /led page is accessed
+// when led page is accessed
 // ***************************
 void handleLed() {
   // capture any value passed into the led argument and assign to ledState
   ledState = server.arg("led").toInt();
-  digitalWrite (ledPin, ledState);
+  int analogRequest = server.arg("analog").toInt();
+  if (analogRequest > 0) {
+    Serial.println(analogRequest);
+    analogWrite(ledPin, analogRequest);
+  }
+  else {
+    digitalWrite (ledPin, ledState);
+    //Serial.println(ledState);
+  }
 
   /* Dynamically generate the LED toggle link, based on its current state (on or off)*/
   char ledText[80];
@@ -137,19 +92,25 @@ void handleLed() {
     strcpy(ledText, "LED is on. <a href=\"/led/?led=1\">Turn it Off!</a>");
   }
 
+
   int sec = millis() / 1000;
   int min = sec / 60;
   int hr = min / 60;
 
+
+  // TODO: read analog value and assign to background color
   int red = 100;
   int green = 100;
   int blue = 100;
   // calculate background color
   unsigned long bgVal = red * 65536 + green * 256 + blue ;// (0xffffff); // r << 16 + g << 8 + b
 
+
+
   // Build an HTML page to display on the web-servesr root address
   char html[1000];
   snprintf ( html, 1000,
+
              "<html>\
   <head>\
     <meta http-equiv='refresh' content='10'/>\
@@ -162,13 +123,82 @@ void handleLed() {
   <body>\
     <h1>LED page</h1>\
     <p>Uptime: %02d:%02d:%02d</p>\
-    <p>Analog in (red) value : %d%</p>\
+    <p>Background color red value : %d%</p>\
     <p>%s<p>\
     <p>This page refreshes every 10 seconds. Click <a href=\"javascript:window.location.reload();\">here</a> to refresh the page now.</p>\
   </body>\
 </html>",
              bgVal, // https://stackoverflow.com/questions/14733761/printf-formatting-for-hex
              hr, min % 60, sec % 60,
+             analogVal,
+             ledText
+           );
+  server.send ( 200, "text/html", html );
+  //  digitalWrite ( ledPin, 1 );
+}
+
+void handleRoot() {
+  // capture any value passed into the led argument and assign to ledState
+  ledState = server.arg("led").toInt();
+  int analogRequest = server.arg("analog").toInt();
+  if (analogRequest > 0) {
+    Serial.print("handleRoot");
+    Serial.println(analogRequest);
+    analogWrite(ledPin, analogRequest);
+  }
+  else {
+    digitalWrite (ledPin, ledState);
+    //Serial.println(ledState);
+  }
+
+  /* Dynamically generate the LED toggle link, based on its current state (on or off)*/
+  char ledText[80];
+
+  if (ledState) {
+    strcpy(ledText, "LED is off. <a href=\"/led/?led=0\">Turn it On!</a>");
+  }
+
+  else {
+    strcpy(ledText, "LED is on. <a href=\"/led/?led=1\">Turn it Off!</a>");
+  }
+
+
+  int sec = millis() / 1000;
+  int min = sec / 60;
+  int hr = min / 60;
+
+  // TODO: read analog value and assign to background color
+  int red = 80;
+  int green = 100;
+  int blue = 100;
+  // calculate background color
+  unsigned long bgVal = red * 65536 + green * 256 + blue ;// (0xffffff); // r << 16 + g << 8 + b
+
+
+  // Build an HTML page to display on the web-servesr root address
+  char html[1000];
+  snprintf ( html, 1000,
+
+             "<html>\
+  <head>\
+    <meta http-equiv='refresh' content='10'/>\
+    <title>ESP8266 WiFi Network</title>\
+    <style>\
+      body { background-color: %0x%; font-family: Arial, Helvetica, Sans-Serif; font-size: 1.5em; Color: #000000; }\
+      h1 { Color: #FFF000; }\
+    </style>\
+  </head>\
+  <body>\
+    <h1>ESP8266 Wi-Fi Access Point and Web Server Demo</h1>\
+    <p>Uptime: %02d:%02d:%02d</p>\
+    <p>Background color red value : %d%</p>\
+    <p>%s<p>\
+    <p>This page refreshes every 10 seconds. Click <a href=\"javascript:window.location.reload();\">here</a> to refresh the page now.</p>\
+  </body>\
+</html>",
+             bgVal, // https://stackoverflow.com/questions/14733761/printf-formatting-for-hex
+             hr, min % 60, sec % 60,
+             analogVal,
              ledText
            );
   server.send ( 200, "text/html", html );

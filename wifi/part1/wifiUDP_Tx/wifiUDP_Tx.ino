@@ -41,11 +41,11 @@ int beat = 0;
 
 // timer variables
 unsigned long lastSend = 0;
-int interval = 2000; // every 2 seconds
+int interval = 500; // every 2 seconds
 
 // IP addresses to send to:
 //IPAddress remoteIPAddress =  IPAddress(192, 168, 86, 58); // laptop
-IPAddress remoteIPAddress =  IPAddress(192, 168, 86, 53);   // ESP8266
+IPAddress remoteIPAddress =  IPAddress(10,20,128,136);   // ESP8266
 
 // UDP variables
 WiFiUDP UDP;
@@ -118,7 +118,7 @@ void loop() {
         byte message[2];
         message[0] = 0;
         message[1] = beat++;
-        beat %= 16;           // 2 bytes can hold integer value up to  2^16 = 65,535
+        beat %= 255;           // 2 bytes can hold integer value up to  2^16 = 65,535
 
         // broadcast this value to all the IP Addresses in the list:
 
