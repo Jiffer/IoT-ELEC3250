@@ -42,11 +42,11 @@ void loop() {
   while ( network.available() ) {     // Is there any incoming data?
     RF24NetworkHeader header;
     unsigned long incomingData;
-    Serial.println(incomingData);
+    
     // read incoming data
     network.read(header, &incomingData, sizeof(incomingData)); 
     digitalWrite(led, incomingData);
-
+    Serial.println(incomingData);
   }
   //===== Sending =====//
   // brightness control at Node 02
