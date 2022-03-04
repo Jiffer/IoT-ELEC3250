@@ -21,6 +21,8 @@ const char *password = "connected";
 boolean wifiConnected = false;
 
 // my IP requested
+// TODO : change the IP address requested to match the one used for the rest of the lab
+// You may need to change this depending the network you use
 IPAddress ip(192,168,86,53);
 IPAddress gateway(10, 0, 0, 1);
 IPAddress subnet(255, 255, 255, 0);

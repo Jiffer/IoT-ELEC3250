@@ -93,7 +93,6 @@ void handleLed() {
   int min = sec / 60;
   int hr = min / 60;
 
-
   // TODO: read analog value and assign to background color
   int analogVal = analogRead(A0);
   int red = 100;
@@ -101,8 +100,6 @@ void handleLed() {
   int blue = 100;
   // calculate background color
   unsigned long bgVal = red * 65536 + green * 256 + blue ;// (0xffffff); // r << 16 + g << 8 + b
-
-
 
   // Build an HTML page to display on the web-servesr root address
   char html[1000];
