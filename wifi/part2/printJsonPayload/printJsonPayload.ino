@@ -6,8 +6,8 @@
 
 WiFiClient wifiClient;
 
-const char* ssid = "things";
-const char* password = "connected";
+const char* ssid = "IoT_External";
+const char* password = "CU!IoT#303315776Ex";
 
 void setup () {
 

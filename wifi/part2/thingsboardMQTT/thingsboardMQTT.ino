@@ -2,8 +2,8 @@
 #include <ESP8266WiFi.h>
 #include <ThingsBoard.h>
 
-#define WIFI_AP "things"
-#define WIFI_PASSWORD "connected"
+#define WIFI_AP "IoT_External"
+#define WIFI_PASSWORD "CU!IoT#303315776Ex"
 
 #define TOKEN "I7EpmuNaBRC5Iysryzoy"
 
