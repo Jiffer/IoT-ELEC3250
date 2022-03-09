@@ -17,8 +17,8 @@
 #define UDP_TX_PACKET_MAX_SIZE 860
 
 // WiFi variables
-const char *ssid = "things";
-const char *password = "connected";
+const char *ssid = "IoT_External";
+const char *password = "CU!IoT#303315776Ex";
 boolean wifiConnected = false;
 
 // My IP address:
@@ -41,7 +41,7 @@ int beat = 0;
 
 // timer variables
 unsigned long lastSend = 0;
-int interval = 500; // every 2 seconds
+int interval = 2000; // every 2 seconds
 
 // IP addresses to send to:
 //IPAddress remoteIPAddress =  IPAddress(192, 168, 86, 58); // laptop
@@ -167,7 +167,7 @@ boolean connectWifi() {
   // Wait for connection
   Serial.print("Connecting");
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
+    delay(3000);
     Serial.print(".");
     if (i > 10) {
       state = false;

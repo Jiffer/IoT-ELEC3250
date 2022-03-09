@@ -23,9 +23,9 @@ boolean wifiConnected = false;
 // my IP requested
 // TODO : change the IP address requested to match the one used for the rest of the lab
 // You may need to change this depending the network you use
-IPAddress ip(192,168,86,53);
-IPAddress gateway(10, 0, 0, 1);
-IPAddress subnet(255, 255, 255, 0);
+//IPAddress ip(192,168,86,53);
+//IPAddress gateway(10, 0, 0, 1);
+//IPAddress subnet(255, 255, 255, 0);
 
 // UDP variables
 unsigned int localPort = 8000;
@@ -129,7 +129,7 @@ boolean connectWifi() {
   boolean state = true;
   int i = 0;
   WiFi.begin(ssid, password);
-  WiFi.config(ip, gateway, subnet);
+//  WiFi.config(ip, gateway, subnet);
   Serial.println("");
   Serial.println("Connecting to WiFi");
 
