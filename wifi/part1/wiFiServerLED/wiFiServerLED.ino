@@ -8,8 +8,8 @@
 #include <ESP8266WebServer.h>
 
 /* WiFi access point settings. Update them as needed */
-const char *ssid = "things";
-const char *password = "connected";
+const char *ssid = "IoT_External";
+const char *password = "CU!IoT#303315776Ex";
 
 // Define a web server at port 800 for HTTP
 // NOTE: if 80 is used your web browser

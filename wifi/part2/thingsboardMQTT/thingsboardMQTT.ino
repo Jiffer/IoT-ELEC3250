@@ -2,10 +2,10 @@
 #include <ESP8266WiFi.h>
 #include <ThingsBoard.h>
 
-#define WIFI_AP "things"
-#define WIFI_PASSWORD "connected"
+#define WIFI_AP "IoT_External"
+#define WIFI_PASSWORD "CU!IoT#303315776Ex"
 
-#define TOKEN "YOUR_TOKEN_HERE"
+#define TOKEN "YI7EpmuNaBRC5Iysryzoy"
 
 
 char thingsboardServer[] = "demo.thingsboard.io";
@@ -78,13 +78,14 @@ void readSensorAndSendData()
 }
 
 void InitWiFi()
-{
+{delay(500);
+Serial.println("");
   Serial.println("Connecting to AP ...");
   // attempt to connect to WiFi network
 
   WiFi.begin(WIFI_AP, WIFI_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
+    delay(1000);
     Serial.print(".");
   }
   Serial.println("Connected to AP");

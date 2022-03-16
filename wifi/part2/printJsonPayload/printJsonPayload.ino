@@ -6,8 +6,8 @@
 
 WiFiClient wifiClient;
 
-const char* ssid = "IoT_External";
-const char* password = "CU!IoT#303315776Ex";
+const char* ssid = "things";
+const char* password = "connected";
 
 void setup () {
 
@@ -27,7 +27,7 @@ void loop() {
   if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
 
     HTTPClient http;  //Declare an object of class HTTPClient
-    http.begin(wifiClient, "http://jsonplaceholder.typicode.com/users/1");  //Specify request destination
+    http.begin(wifiClient, "http://jsonplaceholder.typicode.com/users/3");  //Specify request destination
     int httpCode = http.GET();                                  //Send the request
 
     if (httpCode > 0) { //Check the returning code
