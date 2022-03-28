@@ -67,6 +67,7 @@ void loop() {
       // Don't use Delay, use a timer so the poll() function
       // can be called to service any incoming requests
       if (millis() > sensorTimer) {
+        sensorTimer = millis() + sensorInterval;
         // 1.3.4 TODO: replace analogRead with onboard sensor reading
         // 1.4 TODO: add another characteristic with BLENotify parameter for a 2nd sensor
         sensorVal = analogRead(A0);
