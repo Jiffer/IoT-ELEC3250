@@ -17,8 +17,8 @@
 #define UDP_TX_PACKET_MAX_SIZE 860
 
 // WiFi variables
-const char *ssid = "IoT_External";
-const char *password = "CU!IoT#303315776Ex";
+const char *ssid = "Thing2";
+const char *password = "Connected";
 boolean wifiConnected = false;
 
 // My IP address:
@@ -30,7 +30,7 @@ IPAddress gateway(10, 0, 0, 1);
 IPAddress subnet(255, 255, 255, 0);
 
 
-const int buttonPin = 0;   // GPIO 5 = nodeMCU D1
+const int buttonPin = 5; // GPIO 5 = nodeMCU D1
 
 // keep track of button state to check if it has changed
 int buttonState;
@@ -41,11 +41,11 @@ int beat = 0;
 
 // timer variables
 unsigned long lastSend = 0;
-int interval = 2000; // every 2 seconds
+int interval = 500; // every 2 seconds
 
 // IP addresses to send to:
 //IPAddress remoteIPAddress =  IPAddress(192, 168, 86, 58); // laptop
-IPAddress remoteIPAddress =  IPAddress(10,20,128,136);   // ESP8266
+IPAddress remoteIPAddress =  IPAddress(192,168,86,57);   // ESP8266
 
 // UDP variables
 WiFiUDP UDP;
@@ -118,7 +118,7 @@ void loop() {
         byte message[2];
         message[0] = 0;
         message[1] = beat++;
-        beat %= 255;           // 2 bytes can hold integer value up to  2^16 = 65,535
+        beat %= 16;           // 2 bytes can hold integer value up to  2^16 = 65,535
 
         // broadcast this value to all the IP Addresses in the list:
 

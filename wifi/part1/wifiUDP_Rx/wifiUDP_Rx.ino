@@ -12,11 +12,11 @@
 
 #include <ESP8266WiFi.h>
 #include <WiFiUDP.h>
-#define UDP_TX_PACKET_MAX_SIZE 860 
+#define UDP_TX_PACKET_MAX_SIZE 860
 
 // WiFi variables
-const char *ssid = "IoT_External";
-const char *password = "CU!IoT#303315776Ex";
+const char *ssid = "Thing2";
+const char *password = "Connected";
 
 boolean wifiConnected = false;
 
@@ -31,13 +31,12 @@ boolean wifiConnected = false;
 unsigned int localPort = 8000;
 WiFiUDP UDP;
 boolean udpConnected = false;
-char packetBuffer[UDP_TX_PACKET_MAX_SIZE]; //buffer to hold incoming packet,
+char packetBuffer[UDP_TX_PACKET_MAX_SIZE];  //buffer to hold incoming packet,
 
 // output pins
 // int ledPin = 5;
 
-void setup()
-{
+void setup() {
   Serial.begin(115200);
   Serial.println();
 
@@ -55,7 +54,8 @@ void setup()
     Serial.println(WiFi.localIP());
 
     // initialize output pins to control the outputs
-//    pinMode(ledPin, OUTPUT);
+    //    pinMode(ledPin, OUTPUT);
+    pinMode(2, OUTPUT);
   }
 
   udpConnected = connectUDP();
@@ -66,25 +66,22 @@ void setup()
 }
 
 void loop() {
-  
+
   // check if the WiFi and UDP connections were successful
   if (wifiConnected) {
     if (udpConnected) {
-      
+
       // if there’s data available, read a packet
       int packetSize = UDP.parsePacket();
-      if (packetSize > 0) 
-      {
+      if (packetSize > 0) {
         Serial.println("");
         Serial.print("Received packet of size ");
         Serial.println(packetSize);
         Serial.print("From ");
         IPAddress remote = UDP.remoteIP();
-        for (int i = 0; i < 4; i++)
-        {
+        for (int i = 0; i < 4; i++) {
           Serial.print(remote[i], DEC);
-          if (i < 3)
-          {
+          if (i < 3) {
             Serial.print(".");
           }
         }
@@ -98,9 +95,16 @@ void loop() {
         int receivedValue = packetBuffer[0] * 256 + packetBuffer[1];
         Serial.print("got message! as int: ");
         Serial.println(receivedValue);
+        Serial.println(receivedValue);
+        if (receivedValue % 4 == 0) {
+          Serial.println("hi");
+          digitalWrite(2, LOW);
+        } else {
+          digitalWrite(2, HIGH);
+        }
         // print as String
         Serial.print("as string: ");
-        Serial.println(String((char*)packetBuffer));
+        Serial.println(String((char *)packetBuffer));
       }
     }
   }
@@ -116,8 +120,7 @@ boolean connectUDP() {
   if (UDP.begin(localPort) == 1) {
     Serial.println("Connection successful");
     state = true;
-  }
-  else {
+  } else {
     Serial.println("Connection failed");
   }
   return state;
@@ -129,7 +132,7 @@ boolean connectWifi() {
   boolean state = true;
   int i = 0;
   WiFi.begin(ssid, password);
-//  WiFi.config(ip, gateway, subnet);
+  //  WiFi.config(ip, gateway, subnet);
   Serial.println("");
   Serial.println("Connecting to WiFi");
 
@@ -150,8 +153,7 @@ boolean connectWifi() {
     Serial.println(ssid);
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
-  }
-  else {
+  } else {
     Serial.println("");
     Serial.println("Connection failed.");
   }

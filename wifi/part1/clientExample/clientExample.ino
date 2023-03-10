@@ -5,8 +5,8 @@
 #endif
 
 /* WiFi access point settings. Update them as needed */
-const char *ssid = "IoT_External";
-const char *password = "CU!IoT#303315776Ex";
+const char *ssid = "Thing2";
+const char *password = "Connected";
 
 // web page to connect to and print to Serial:
 const char* host = "www.example.com";
